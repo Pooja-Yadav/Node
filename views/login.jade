@@ -1,0 +1,40 @@
+//CopyRight Tag Solutions pvt.ltd 2013
+doctype 5
+html
+    head(lang="en")
+        title LSR
+        link(rel='stylesheet', href='/stylesheets/main.css')
+    body
+        div#container
+            div#header
+                div#logo
+                    a LSR
+                    div#user
+                        span#user-info
+            div#fb-root
+            div#sub_container
+                div#id_login
+                    div#hr_login
+                        p Log In
+                    form(method="POST")
+                        div#form-div
+                            label Email
+                            input#email(type="email", name="email")
+                            label Password
+                            input#password(type="password", name="password")
+                        div#button
+                            input#submit(type="submit", value="Login")
+                            input#logout(type="submit", value="Logout")
+                            p
+                                a Forgot password?
+                div#social_network
+                    div#social_link
+                        a#twitter
+                            div#twitter_text Log in with Twitter
+                        a#login(href="/fbauth")
+                            div#facebook_text Log in with Facebook
+                        a#linkedin
+                            div#linkedin_text Log in with LinkedIn
+                div#signup
+                    p Need an account?
+                        a(href="/signup") Sign Up

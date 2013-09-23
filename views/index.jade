@@ -1,0 +1,356 @@
+//CopyRight Tag Solutions Pvt.Ltd 2013
+doctype 5
+html
+    head(lang="en")
+        title LSR
+        link(rel='stylesheet', href='/stylesheets/index.css')
+        link(rel='stylesheet', href='/stylesheets/jslider.css')
+        link(rel='stylesheet', href='/stylesheets/jslider.round.css')
+        script(type='text/javascript', src='/javascripts/jquery-1.7.1.js')
+        script(type='text/javascript', src='/javascripts/jshashtable-2.1_src.js')
+        script(type='text/javascript', src='/javascripts/jquery.numberformatter-1.2.3.js')
+        script(type='text/javascript', src='/javascripts/tmpl.js')
+        script(type='text/javascript', src='/javascripts/jquery.dependClass-0.1.js')
+        script(type='text/javascript', src='/javascripts/draggable-0.1.js')
+        script(type='text/javascript', src='/javascripts/jquery.slider.js')
+        script(type='text/javascript', src='http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js')
+        script.
+            // Simple geocoder function to display searcherd city on map
+                        function codeAddress() {
+                            var address = document.getElementById('serachFunctionComboBox').value;
+                            geocoder.geocode( { 'address': address}, function(results, status) {
+                            console.log("Results"+results);
+                            console.log("Status"+status);
+                            if (status == google.maps.GeocoderStatus.OK) {
+                            map.setCenter(results[0].geometry.location);
+                                var marker = new google.maps.Marker({
+                                    map: map,
+                                    position: results[0].geometry.location
+                                });
+                                } else {
+                                    alert('Unable to get location for the following reason: ' + status);
+                                    }
+                                    });
+                        }
+    body
+        div#bigWarpper
+            header#mainHeader
+                h1#Welcome Welcome to LSR
+                    span#user-info
+            nav#mainNav
+                ul
+                    li: a(href="/", style="text-decoration: none")
+                        abbr#navText HOME
+                    li: a(href="/properties", style="text-decoration: none")
+                        abbr#navText PROPERTY
+                    li: a(href="/properties/add", style="text-decoration: none")
+                        abbr#navText ADD
+                    li: a(href="/login", style="text-decoration: none")
+                        abbr#navText LOGIN
+            section#mainSection
+                article#serachFunction
+                    form
+                        ul#serachFunctionInputTextUL
+                            li
+                                input#serachFunctionInputText(type="number", name="area", placeholder="Area in sq. feet")
+                            li
+                                input#serachFunctionComboBox(type="text", name="location", placeholder="Place to Serach")
+                            li#PricingSliderLi
+                                a Pricing: <br/><br/>
+                                    #PricingSliderDiv
+                                        input#PricingSlider(type="slider", value="5000;50000", name="price")
+                                        script(type='text/javascript', charset='utf-8').
+                                            jQuery("#PricingSlider").slider({from: 1000, to: 500000, heterogeneity: ['50/50000'], step: 1000, dimension: '&nbsp;$', skin: "round"});
+                            li#BedroomsSliderLi
+                                a Min Bedrooms: <br/><br/>
+                                    #BedroomsSliderDiv
+                                        input#BedroomsSlider(type="slider", value="2", name="bedrooms")
+                                        script(type='text/javascript', charset='utf-8').
+                                            jQuery("#BedroomsSlider").slider({from: 1, to: 10, step: 1, round: 1, format: { format: '', locale: 'us' }, dimension: '&nbsp;room(s)', skin: "round"});
+                            li#BathroomSliderLi
+                                a Min Bathroom: <br/><br/>
+                                    #BathroomSliderDiv
+                                        input#BathroomSlider(type="slider", value="2", name="bathrooms")
+                                        script(type='text/javascript', charset='utf-8').
+                                            jQuery("#BathroomSlider").slider({
+                                              from: 1,
+                                              to: 10,
+                                              step: 1,
+                                              round: 1,
+                                              format: { format: '##', locale: 'us' },
+                                              dimension: '&nbsp;bathroom(s)', skin: "round"
+                                             });
+                            li
+                                #serachFunctionRadio
+                                    input(type='radio', name='prop_type', value='rent')
+                                    a Rental |
+                                    input(type='radio', name='prop_type', value='timeshare')
+                                    a Timeshare |
+                                    input(type='radio', name='prop_type', value='sale')
+                                    a Sale
+                            li
+                                #serachFunctionRadio
+                                    input#serachAmanitiesText(type="text", name="amenities", placeholder="Amenities")
+                            li
+                                #serachFunctionButtonBox
+                                    button#serachFunctionButton(type='button', name='viewProperty',onclick='codeAddress()') View Property
+                                    a#serachFunctionAdvaceSearch(href="http://") Advance Search
+                article#advertisementBlock
+            aside#mainAside
+                if routePath === "home"
+                    div#MapDiv
+                        script.
+                            var map;
+                            var propertyList = JSON.parse( !{JSON.stringify(products)} );
+                            function initialize() {
+                            // Initial Map Options.
+                                var mapOptions = {
+                                    zoom: 14,
+                                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                                };
+
+                            // Loading Map
+
+                                map = new google.maps.Map(document.getElementById('MapDiv'), mapOptions);
+
+                            // Loading location as per Geolocation
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(function (position) {
+
+                                    var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                            // Function for Clustering
+                            // Loading properties in Map using marker array from DB
+                                    var markers = [];
+                                    var infoWindows = [];
+                                    for (var i = 0; i < propertyList.length; i++) {
+                                        var latLng = new google.maps.LatLng(propertyList[i].LatLng.latitude, propertyList[i].LatLng.longitude);
+                                        var marker = new google.maps.Marker({'position': latLng, infoWindowIndex : i});
+                                        var content = "<h3> Property Name:" + propertyList[i].productName + "<br> <h4> Price:" + propertyList[i].price;
+                                        var infoWindow = new google.maps.InfoWindow({
+                                            content : content
+                                        });
+                                        google.maps.event.addListener(marker, 'mouseover',
+                                            function(event)
+                                            {
+                                                infoWindows[this.infoWindowIndex].open(map, this);
+                                            }
+                                        );
+                                        google.maps.event.addListener(marker, 'mouseout',
+                                            function(event)
+                                            {
+                                                infoWindows[this.infoWindowIndex].close();
+                                            }
+                                        );
+                                        infoWindows.push(infoWindow);
+                                        markers.push(marker);
+                                    }
+                                    var markerCluster = new MarkerClusterer(map, markers, mapOptions);
+                            // End of Clustering
+
+                            // Setting up the Map position.
+                                    map.setCenter(pos);
+
+                            // Function for Places.
+                            // Not sure about Markers array please go through it when time permits
+                            // End of the Places Library
+
+                            // Reverse Geocoder function to get location city and state in Readable format
+                            // Also populate in area search box
+
+                                    geocoder = new google.maps.Geocoder();
+                                var location = pos;
+                                geocoder.geocode({'location': location }, function (results, status) {
+
+                                if (status == google.maps.GeocoderStatus.OK) {
+                            //Check result 0
+                                var result = results[0];
+                            //look for locality tag and administrative_area_level_1
+                                var city = "";
+                                var state = "";
+                                for (var i = 0, len = result.address_components.length; i < len; i++) {
+
+                                var ac = result.address_components[i];
+                                if (ac.types.indexOf("locality") >= 0) city = ac.long_name;
+                                if (ac.types.indexOf("administrative_area_level_1") >= 0) state = ac.short_name;
+
+                                }
+                            //only report if we got Good Stuff
+                                if (city != '' && state != '') {
+                                document.getElementById("serachFunctionComboBox").placeholder = city + ',' + state;
+                                    } else {
+                                        console.log('Geocoder failed' + status)
+                                        }
+                                        }
+                                        });
+                                }, function () {
+                                    handleNoGeolocation(true);
+                                });
+                            }
+                            else {
+                                handleNoGeolocation(false);
+                            }
+                            }
+
+                            // Test for Geolocation.
+
+                            function handleNoGeolocation(errorFlag) {
+                                if (errorFlag) {
+                                    var content = 'Error: The Geolocation service failed.';
+                                } else {
+                                    var content = 'Error: Your browser doesn\'t support geolocation.';
+                                }
+                                var options = {
+                                    map: map,
+                                    position: new google.maps.LatLng(60, 105),
+                                    content: content
+                                };
+                                var infowindow = new google.maps.InfoWindow(options);
+                                map.setCenter(options.position);
+                            }
+
+                            // Loading main Javascript for Map
+
+
+                            function loadScript() {
+                                var script = document.createElement('script');
+                                script.type = 'text/javascript';
+                                script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
+                                    'callback=initialize&libraries=geometry&libraries=places';
+                                document.body.appendChild(script);
+                            }
+                            window.onload = loadScript;
+
+                else if routePath === "prod"
+                    div#MapDiv
+                        each product in products
+                            li#dispaly
+                                p Name for Property :
+                                    a(href="/properties/#{product.productName}") #{product.productName}
+                                p Type for the Property (Sale/Rental etc) : #{product.type}
+                                p Property Price : #{product.price}
+                                p Property's Number of Bedrooms : #{product.bedrooms}
+                                p Property's Number of Bathrooms : #{product.bathrooms}
+                                p Property's Area : #{product.area}
+                                p Property's Amenities : #{product.amenities}
+                                p Property's Comments : #{product.comments_from_user}
+                                p Property's Address line1 : #{product.address.line1}
+                                p Property's Address line2 : #{product.address.line2}
+                                p Property's City: #{product.address.city}
+                                p Property's State: #{product.address.state}
+                                p Property's Country: #{product.address.country}
+                                p Property's Zip: #{product.address.zip}
+                                p Property's Latitude : #{product.LatLng.latitude}
+                                p Property's Longitude : #{product.LatLng.longitude}
+                                p -------------------------------------------
+                else if routePath === "Add"
+                    form(method="POST",action="/properties")
+                        p#Addelements Name for Property :
+                            input(type="text", name="productName")
+                        p#Addelements Type for the Product :
+                            input(type="text", name="productType")
+                        p#Addelements Type for the Property (Sale/Rental etc) :
+                            input(type="text", name="type")
+                        p#Addelements Property Price :
+                            input(type="number", name="price")
+                        p#Addelements Property's Number of Bedrooms :
+                            input(type="number", name="bedrooms")
+                        p#Addelements Property's Number of Bathrooms :
+                            input(type="number", name="bathrooms")
+                        p#Addelements Property's Area :
+                            input(type="number", name="area")
+                        p#Addelements Property's Amenities :
+                            input(type="text", name="amenities")
+                        p#Addelements Property's Comments :
+                            input(type="text", name="comments_from_user")
+                        p#Addelements Property's Address line1 :
+                            input(type="text", name="line1")
+                        p#Addelements Property's Address line2:
+                            input(type="text", name="line2")
+                        p#Addelements Property's City:
+                            input(type="text", name="city")
+                        p#Addelements Property's State:
+                            input(type="text", name="state")
+                        p#Addelements Property's Country:
+                            input(type="text", name="country")
+                        p#Addelements Property's Zip:
+                            input(type="text", name="zip")
+                        p#Addelements Property's Latitude :
+                            input(type="float", name="latitude")
+                        p#Addelements Property's Longitude :
+                            input(type="float", name="longitude")
+                        button#serachFunctionButton(type="submit", name="AddProduct") Add Product
+                else if routePath === "Edit"
+                    div#dispaly
+                        h3 Update Products
+                        form(method="POST",action="/properties/#{product.productName}",enctype='multipart/form-data')
+                            input(type="hidden", name="_method", value="PUT")
+                            p#Addelements Name for Property :
+                                input(type="text", name="name", value="#{product.productName}")
+                            p#Addelements Type for the Property (Sale/Rental etc) :
+                                input(type="text", name="type", value="#{product.type}")
+                            p#Addelements Property Price :
+                                input(type="number", name="price", value="#{product.price}")
+                            p#Addelements Property's Number of Bedrooms :
+                                input(type="number", name="bedrooms", value="#{product.bedrooms}")
+                            p#Addelements Property's Number of Bathrooms :
+                                input(type="number", name="bathrooms", value="#{product.bathrooms}")
+                            p#Addelements Property's Area :
+                                input(type="number", name="area", value="#{product.area}")
+                            p#Addelements Property's Amenities :
+                                input(type="text", name="amenities", value="#{product.amenities}")
+                            p#Addelements Property's Comments :
+                                input(type="text", name="comments_from_user", value="#{product.comments_from_user}")
+                            p#Addelements Property's Address line1 :
+                                input(type="text", name="line1", value="#{product.address.line1}")
+                            p#Addelements Property's Address line2:
+                                input(type="text", name="line2", value="#{product.address.line2}")
+                            p#Addelements Property's City:
+                                input(type="text", name="city", value="#{product.address.city}")
+                            p#Addelements Property's State:
+                                input(type="text", name="state", value="#{product.address.state}")
+                            p#Addelements Property's Country:
+                                input(type="text", name="country", value="#{product.address.country}")
+                            p#Addelements Property's Zip:
+                                input(type="text", name="zip", value="#{product.address.zip}")
+                            p#Addelements Property's Latitude :
+                                input(type="float", name="latitude", value="#{product.LatLng.latitude}")
+                            p#Addelements Property's Longitude :
+                                input(type="float", name="longitude", value="#{product.LatLng.longitude}")
+                            p#Addelements Property's Image :
+                                input(type="file", name="picture")
+                            button#serachFunctionButton(type="submit") Update
+                else if routePath === "Show"
+                    div#dispaly
+                        p Name for Property : #{product.productName}
+                        p Type for the Property (Sale/Rental etc) : #{product.type}
+                        p Property Price : #{product.price}
+                        p Property's Number of Bedrooms : #{product.bedrooms}
+                        p Property's Number of Bathrooms : #{product.bathrooms}
+                        p Property's Area : #{product.area}
+                        p Property's Amenities : #{product.amenities}
+                        p Property's Comments : #{product.comments_from_user}
+                        p Property's Address line1 : #{product.address.line1}
+                        p Property's Address line2 : #{product.address.line2}
+                        p Property's City: #{product.address.city}
+                        p Property's State: #{product.address.state}
+                        p Property's Country: #{product.address.country}
+                        p Property's Zip: #{product.address.zip}
+                        p Property's Latitude : #{product.LatLng.latitude}
+                        p Property's Longitude : #{product.LatLng.longitude}
+                        img(src="#{product.picture}", width="32", height="32")
+                        a(href="/properties/#{product.productName}/edit", style="text-decoration: none")
+                            h3 Edit
+                            form(action="/properties/#{product.productName}", method="POST")
+                                input(type="hidden", name="_method", value="DELETE")
+                                button#serachFunctionButton(type="submit", name="Delete") Delete
+            footer#mainFooter
+                ul
+                    li
+                        img#LINKEDIN(src="/images/linkedin-variation.png", width="32", height="32")
+                    li
+                        img#TWITTER(src="/images/twitter-variation.png", width="32", height="32")
+                    li
+                        img#GOOGLEPLUS(src="/images/gplus-variation.png", width="32", height="32")
+                    li
+                        img#FACEBOOK(src="/images/facebook-variation.png", width="32", height="32")

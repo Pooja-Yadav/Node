@@ -1,0 +1,88 @@
+//CopyRight Tag Solutions pvt.ltd 2013
+doctype 5
+html
+    head(lang="en")
+        title LSR
+        link(rel='stylesheet', href='/stylesheets/main.css')
+    body
+        div#container_user
+            div#header_user
+                div#logo_user
+                    a LSR
+                    div#user_page
+                        span Welcome #{user.name}
+            div#sub_container_user
+                div#user_data
+                    div#hr_login
+                        p #{user.first_name}'s data
+                    div#user_id
+                        div#user_id_id
+                            p Id
+                        div#user_id_fbid
+                            p #{user.fbId}
+                    div#user_name
+                        div#user_id_name
+                            p Name
+                        div#user_id_fbname
+                            p #{user.name}
+                    div#user_first_name
+                        div#user_id_first_name
+                            p FirstName
+                        div#user_id_fbfirst_name
+                            p #{user.first_name}
+                    div#user_last_name
+                        div#user_id_last_name
+                            p LastName
+                        div#user_id_fblast_name
+                            p #{user.last_name}
+                    div#user_email
+                        div#user_id_email
+                            p Email
+                        div#user_id_fbemail
+                            p #{user.email}
+                    div#user_user
+                        div#user_id_user
+                            p UserName
+                        div#user_id_fbuser
+                            p #{user.username}
+                    div#user_pic
+                        div#user_id_pic
+                            p Profile Picture
+                        div#user_id_fbpic
+                            img(src="https://graph.facebook.com/#{user.username}/picture?width=30&height=30")
+                    div#user_gen
+                        div#user_id_gen
+                            p Gender
+                        div#user_id_fbgen
+                            p #{user.gender}
+                    div#user_birth
+                        div#user_id_birth
+                            p Birthday
+                        div#user_id_fbbirth
+                            p #{user.birthday}
+                    div#user_bio
+                        div#user_id_bio
+                            p About
+                        div#user_id_fbbio
+                            p #{user.bio}
+                    div#user_home
+                        div#user_id_home
+                            p Hometown
+                        div#user_id_fbhome
+                            p #{user.hometown}
+                    div#user_loca
+                        div#user_id_loca
+                            p Location
+                        div#user_id_fbloca
+                            p #{user.location}
+                    div#user_friend
+                        div#user_id_friend
+                            p Friends
+                        div#user_id_fbfriend
+                            if(user != null && user.friends != null)
+                                p #{user.friends.data[0].name}
+                                p #{user.friends.data[1].name}
+                                p #{user.friends.data[2].name}
+                                p #{user.friends.data[3].name}
+                                p #{user.friends.data[4].name}
+            a(href='logout') Logout

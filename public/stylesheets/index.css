@@ -1,0 +1,237 @@
+/*CopyRight Tag Solutions pvt.ltd 2013*/
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+h1 {
+    font: bold 18px Tahoma;
+}
+
+h2 {
+    font: bold 14px Tahoma;
+}
+
+header, section, footer, aside, nav, article, hgroup {
+    display: block;
+}
+
+body {
+    text-align: center;
+}
+
+#bigWarpper {
+    border: 1px solid white;
+    width: 1000px;
+    margin: 10px auto;
+    text-align: left;
+    /*background: red;
+    color: white;*/
+}
+
+#mainHeader {
+    border: 1px solid white;
+    background: Red;
+    padding: 15px;
+    color: white;
+    padding-left: 5px;
+}
+
+#user-info{
+    float: right;
+    font-size: 14px;
+}
+
+#mainNav {
+    border: 1px solid white;
+    background: Red;
+    color: white;
+    text-align: right;
+}
+
+#mainNav li {
+    display: inline-block;
+    list-style: none;
+    font: bold 14px Tahoma;
+    background: Red;
+    color: white;
+    padding: 5px;
+}
+
+#mainSection {
+    float: left;
+    width: 340px;
+    height: 481px;
+    margin-top: 2px;
+    margin-right: 9px;
+    margin-left: 1px;
+    margin-bottom: 5px;
+}
+
+#mainAside {
+    float: left;
+    width: 649px;
+    height: 481px;
+    margin-top: 2px;
+    margin-right: 1px;
+    margin-left: 0px;
+    margin-bottom: 5px;
+    padding: 0px;
+    background: white;
+}
+
+#MapDiv {
+    float: left;
+    width: 649px;
+    height: 481px;
+    margin-top: 2px;
+    margin-right: 1px;
+    margin-left: 0px;
+    margin-bottom: 5px;
+    padding: 0px;
+    background: white;
+}
+
+#mainFooter {
+    clear: both;
+    background: Red;
+    text-align: right;
+    margin: 0px;
+    padding-top: 5px;
+    border: 0px;
+    height: 43px;
+}
+
+#mainFooter li {
+    display: inline-block;
+    list-style: none;
+    background: Red;
+    padding: 3px;
+    padding-left: 5px;
+    margin-left: 5px;
+}
+
+#serachFunction {
+    background: #E6E6E6;
+    height: 381px;
+}
+
+#advertisementBlock {
+    background: Red;
+    height: 100px;
+}
+
+#serachFunctionInputTextUL {
+    padding: 0px;
+    margin: 0px;
+    width: 340px;
+    border: 0px;
+    color: red;
+    font: 15px Tahoma;
+}
+
+#serachFunction li {
+    list-style: none;
+}
+
+#serachFunctionInputText {
+    width: 325px;
+    margin: 5px;
+}
+
+#serachFunctionComboBox {
+    width: 327px;
+    margin: 5px;
+    color: red;
+    font: 15px Tahoma;
+}
+
+#PricingSliderLi {
+    width: 325px;
+    margin: 8px;
+    padding-bottom: 2px;
+    height: 50px;
+}
+
+#PricingSliderDiv {
+    -moz-box-shadow: 4px 6px 7px rgb(110, 110, 110);
+    -webkit-box-shadow: 4px 6px 7px rgb(110, 110, 110);
+    box-shadow: 4px 6px 7px rgb(110, 110, 110);
+}
+
+#BedroomsSliderLi {
+    width: 325px;
+    margin: 8px;
+    padding-bottom: 2px;
+    height: 50px;
+}
+
+#BedroomsSliderDiv {
+    -moz-box-shadow: 4px 6px 7px rgb(110, 110, 110);
+    -webkit-box-shadow: 4px 6px 7px rgb(110, 110, 110);
+    box-shadow: 4px 6px 7px rgb(110, 110, 110);
+}
+
+#BathroomSliderLi {
+    width: 325px;
+    margin: 8px;
+    padding-bottom: 2px;
+    height: 50px;
+}
+
+#BathroomSliderDiv {
+    -moz-box-shadow: 4px 6px 7px rgb(110, 110, 110);
+    -webkit-box-shadow: 4px 6px 7px rgb(110, 110, 110);
+    box-shadow: 4px 6px 7px rgb(110, 110, 110);
+}
+
+#serachFunctionRadio {
+    width: 325px;
+    margin: 0px;
+    padding: 5px;
+
+}
+
+#serachFunctionButtonBox {
+    width: 325px;
+    margin: 5px;
+}
+
+#serachFunctionButton {
+    padding: 5px;
+    margin: 5px;
+    margin-left: 0px;
+    background: Red;
+    color: White;
+    font: 15px Tahoma;
+    border: 0px;
+    -moz-box-shadow: 5px 7px 7px rgb(110, 110, 110);
+    -webkit-box-shadow: 5px 7px 7px rgb(110, 110, 110);
+    box-shadow: 5px 7px 7px rgb(110, 110, 110);
+}
+
+#serachFunctionAdvaceSearch {
+    color: Red;
+}
+
+#MapDiv {
+    width: 649px;
+    height: 481px;
+    overflow-y: scroll;
+    max-width: 649px;
+    max-height: 481px;
+}
+
+#Addelements {
+    padding: 2px;
+    font: 14px Tahoma;
+}
+
+#dispaly {
+    font: 14px Tahoma;
+}
+
+#serachAmanitiesText {
+
+    width: 325px;
+}
