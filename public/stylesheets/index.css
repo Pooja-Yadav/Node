@@ -235,3 +235,65 @@ body {
 
     width: 325px;
 }
+
+#mapHoverInfo{
+    color: deepskyblue;
+    text-align: center;
+    width: 100%;
+    border-bottom:1px solid #d9d9d9;
+}
+
+#mapHoverInfo ul{
+    padding: 0;
+    margin: 0 auto;
+    display: inline-block;
+    width: 100%;
+}
+
+#mapHoverInfo ul li{
+    display: inline-block;
+    width: 48%;
+    color: #000000;
+}
+
+#mapHoverInfo ul li:first-child{
+    text-align: left;
+}
+
+#mapHoverInfo ul li:last-child{
+    text-align: right;
+}
+
+#mapHoverInfoPicture{
+    padding: 5px;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+#mapHoverInfoPicture ul{
+    width: 100%;
+    display: inline-block;
+}
+
+#mapHoverInfoPicture ul li{
+    display: inline-block;
+    width: 48%;
+    vertical-align: top;
+}
+
+#mapHoverInfoOptions{
+    text-align: center;
+}
+
+#mapHoverInfoOptions ul{
+    display: inline-block;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0;
+}
+
+#mapHoverInfoOptions ul li{
+    display: inline-block;
+    margin: 0 auto;
+    width: 23%;
+    padding: 5px 0 5px 0;
+}

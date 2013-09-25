@@ -126,7 +126,28 @@ html
                                     for (var i = 0; i < propertyList.length; i++) {
                                         var latLng = new google.maps.LatLng(propertyList[i].LatLng.latitude, propertyList[i].LatLng.longitude);
                                         var marker = new google.maps.Marker({'position': latLng, infoWindowIndex : i});
-                                        var content = "<h3> Property Name:" + propertyList[i].productName + "<br> <h4> Price:" + propertyList[i].price;
+                                        var content = "<div id=mapHoverInfo><h2>"
+                                                        +propertyList[i].address.line1+", "
+                                                        +propertyList[i].address.line2+", "
+                                                        +propertyList[i].address.city+", "
+                                                        +propertyList[i].address.zip
+                                                        +"</h2>"
+                                                        +"<ul><li>"+"Type:"+propertyList[i].type+"</li>"
+                                                        +"<li>Price:"+propertyList[i].price+"</li></ul>"
+                                                        +"</div>"
+                                                        +"<div id=mapHoverInfoPicture>"
+                                                        +"<ul><li><p>Beds:"+propertyList[i].bedrooms+"</p>"
+                                                        +"<p>Baths:"+propertyList[i].bathrooms+"</p>"
+                                                        +"<p>Area:"+propertyList[i].area+"sqft</p>"
+                                                        +"<p>Built:2005</p>"
+                                                        +'<p>More:<img width=10 height=10 src="../images/blue%20arrow.png"></p></li>'
+                                                        +'<li>'+'<img width=100 height=100 src='+propertyList[i].picture+'>'+'</li></ul></div>'
+                                                        +"<div id=mapHoverInfoOptions>"
+                                                        +'<ul><li><img width=35 height=35 src="../images/button.png"></li>'
+                                                        +'<li><img width=35 height=35 src="../images/save.png"></li>'
+                                                        +'<li><img width=35 height=35 src="../images/select.png"></li>'
+                                                        +'<li><img width=33 height=33 src="../images/messgae.png"></li></ul>'
+                                                        +"</div>";
                                         var infoWindow = new google.maps.InfoWindow({
                                             content : content
                                         });
