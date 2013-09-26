@@ -4,6 +4,8 @@ var express = require('express')
     , productRoutes = require('./routes/product')
     , login = require('./routes/login')
     , http = require('http')
+	, https = require('https')
+	, fs = require('fs')
     , path = require('path')
     , mongoose = require('mongoose');
 
@@ -74,6 +76,7 @@ passport.use(new FacebookStrategy({
 // all environments
 app.configure(function () {
     app.set('port', process.env.PORT || 3000);
+	app.set('sslport', process.env.SSLPORT || 3030);
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
     app.use(express.favicon());
@@ -84,6 +87,13 @@ app.configure(function () {
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(express.methodOverride());
+	app.use (function (req, res, next) {
+		if(req.secure) {     
+			next();
+		} else {
+			res.redirect('https://' + req.host +':'+app.get('sslport')+ req.url);
+		}
+	});
     app.use(app.router);
     app.use(express.static(__dirname + "/public"));
 });
@@ -94,6 +104,15 @@ http.createServer(app).listen(app.get('port'), function () {
 });
 
 //mongoose.connect('mongodb://localhost/LSR');
+var options = {
+  key: fs.readFileSync('domain.tld.key'),
+  cert: fs.readFileSync('domain.tld.crt')
+};
+
+https.createServer(options,app).listen(app.get('sslport'), function(){
+  console.log('Express server listening on port ' + app.get('sslport'));
+});
+
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
